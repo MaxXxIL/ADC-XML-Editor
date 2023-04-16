@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>274</width>
-    <height>820</height>
+    <width>302</width>
+    <height>816</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>271</width>
+      <width>301</width>
       <height>721</height>
      </rect>
     </property>
@@ -255,7 +255,7 @@
       <property name="title">
        <string>Training</string>
       </property>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="add_active_engine">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -281,7 +281,7 @@
         <string>Active Engines</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="Remove_active_eng">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -402,7 +402,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>13</x>
@@ -616,12 +616,12 @@
         <string>Convert</string>
        </property>
       </widget>
-      <widget class="QRadioButton" name="roi_resize">
+      <widget class="QCheckBox" name="roi_resize">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>110</y>
-         <width>111</width>
+         <width>70</width>
          <height>17</height>
         </rect>
        </property>
@@ -629,17 +629,17 @@
         <string>Roi Resize</string>
        </property>
       </widget>
-      <widget class="QRadioButton" name="image_smooth">
+      <widget class="QCheckBox" name="image_smooth">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>200</y>
-         <width>111</width>
+         <width>91</width>
          <height>17</height>
         </rect>
        </property>
        <property name="text">
-        <string>Smotth image</string>
+        <string>Smooth image</string>
        </property>
       </widget>
      </widget>
@@ -661,7 +661,7 @@
        <rect>
         <x>140</x>
         <y>40</y>
-        <width>61</width>
+        <width>66</width>
         <height>22</height>
        </rect>
       </property>
@@ -669,9 +669,9 @@
      <widget class="QComboBox" name="comboBox_Engine">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>130</x>
         <y>10</y>
-        <width>91</width>
+        <width>101</width>
         <height>20</height>
        </rect>
       </property>
@@ -770,6 +770,34 @@
         </rect>
        </property>
       </widget>
+     </widget>
+     <widget class="QTreeView" name="treeView">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>490</y>
+        <width>271</width>
+        <height>201</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>460</y>
+        <width>261</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Customer Class to primitive class </string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
@@ -1134,7 +1162,7 @@
    <widget class="QPushButton" name="Set_parameters">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>730</y>
       <width>241</width>
       <height>41</height>
@@ -1150,7 +1178,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>274</width>
+     <width>302</width>
      <height>21</height>
     </rect>
    </property>
