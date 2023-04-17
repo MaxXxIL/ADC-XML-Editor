@@ -1,16 +1,16 @@
-import os.path
 
 from PyQt5 import QtGui, Qt
-
 from product_editor import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QListWidget, QLabel, QListView, QMessageBox, QTreeView, QInputDialog
 from PyQt5.Qt import QStandardItemModel ,QStandardItem
 from PyQt5.QtGui import QPalette, QColor ,QBrush
+from PyQt5.QtCore import Qt
+import os.path
 import sys
 import xmltodict
 import shutil
 from datetime import datetime
-from PyQt5.QtCore import Qt
+
 
 
 
@@ -33,13 +33,19 @@ class my_window(Ui_MainWindow, QMainWindow):
 
     def init_product(self):
         #-------------------upload product xml ----------------#
-        product = self.comboBox.currentText()
-        self.Xml_dict = self.Read_XML_file(self.products_list[product])
-
+        try:
+            product = self.comboBox.currentText()
+            self.Xml_dict = self.Read_XML_file(self.products_list[product])
+        except:
+            self.Xml_dict = self.Read_XML_file(os.getcwd())
         self.root_element = self.Xml_dict['root']
         self.engines_list=[]
         for engine in self.root_element['engines']['engine']:
-            self.engines_list.append(engine['name'])
+            if type(engine) is dict:
+                self.engines_list.append(engine['name'])
+            else:
+                self.engines_list.append(self.root_element['engines']['engine']['name'])
+                break;
         #------ get  xml high params ------#
         self.Version.setText(('Version: ' + self.root_element['version']['number']))
         self.Date.setText(('Date: ' + self.root_element['version']['date']))
@@ -67,11 +73,13 @@ class my_window(Ui_MainWindow, QMainWindow):
         image_element = self.root_element['input_image_properties']['image']
         self.im_type_dict={}
         im_type_l=[]
-        list_len=len(image_element)
-        for im_type in image_element:
-            self.im_type_dict[im_type['image_type_name']] = [im_type['image_type_name'], im_type['size_w'], im_type['size_h'], im_type['max_offset_from_center']]
-            im_type_l.append(im_type['image_type_name'])
-
+        if type(image_element) is not dict:
+            for im_type in image_element:
+                self.im_type_dict[im_type['image_type_name']] = [im_type['image_type_name'], im_type['size_w'], im_type['size_h'], im_type['max_offset_from_center']]
+                im_type_l.append(im_type['image_type_name'])
+        else:
+            self.im_type_dict[image_element['image_type_name']] = [image_element['image_type_name'], image_element['size_w'], image_element['size_h'], image_element['max_offset_from_center']]
+            im_type_l.append(image_element['image_type_name'])
         self.Image_type.clear()
         self.Image_type.addItems(im_type_l)
         self.update_image_type(self.im_type_dict[im_type_l[0]])
@@ -82,16 +90,26 @@ class my_window(Ui_MainWindow, QMainWindow):
         self.engine_dict={}
         engines_l=[]
         engine_element = self.root_element['engines']['engine']
-        for eng in engine_element:
-            self.engine_dict[eng['name']] = eng
-            engines_l.append(eng['name'])
+        if type(engine_element) is not dict:
+            for eng in engine_element:
+                self.engine_dict[eng['name']] = eng
+                engines_l.append(eng['name'])
+            self.update_engine(engine_element[0])
+        else:
+            self.engine_dict[engine_element['name']] = engine_element
+            engines_l.append(engine_element['name'])
+            self.update_engine(engine_element)
         self.engines_l = engines_l
         self.comboBox_Engine.clear()
         self.comboBox_Engine.addItems(engines_l)
-        self.update_engine(engine_element[0])
+
 
     def init_params(self):
-        self.products_list = self.search_products()
+        try:
+            self.products_list = self.search_products()
+        except:
+            self.products_list={}
+            self.products_list['STAT_STM_M5'] = os.path.normpath(os.getcwd() + '\config1_STAT')
         self.comboBox.addItems(self.products_list)
 
     def search_products(self):
